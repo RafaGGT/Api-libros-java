@@ -62,7 +62,15 @@ public class Menu extends MenuTemplate{
                 .findFirst();
         if(libroBuscado.isPresent()){
             System.out.println("Libro Encontrado ");
-            System.out.println(libroBuscado.get());
+            libroBuscado.stream().map(li -> ("\n") +
+                            "Titulo: " + li.titulo().toUpperCase()
+                            + "\nAutor: " + li.autor().stream()
+                            // Otra forma de decir por ejemplo a -> a.nombre()
+                            .map(Autor::nombre)
+                            .collect(Collectors.joining(", "))
+                            + "\nDescargas: " + li.numeroDeDescargas() +
+                            ("\n"))
+                    .forEach(System.out::println);
         }else {
             System.out.println("Libro no encontrado");
         }
